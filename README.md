@@ -15,24 +15,15 @@ For use with LNURLDevice in LNbits.
 
 ### ✅ Support for MULTIPLE GPIOS/LNURLs!!!
 
-|   
 
 ![switch-1](https://user-images.githubusercontent.com/33088785/204107016-bc9473e0-2843-4873-af71-cd934e07f444.gif)
-
-     |    
+ 
 ![switch-2](https://user-images.githubusercontent.com/33088785/204107029-cc4ad95b-b130-4b48-9091-86d7be7d4f16.gif)
 
-
-        |  
 ![switch-3](https://user-images.githubusercontent.com/33088785/204107037-870571f8-b860-4019-93d4-bbdbeaf1091f.gif)
-
-
- | 
 
 ![switch-4](https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif)
 
-  |
-| ------------- |:-------------:| -----:|-----:|
 
 > <a href="https://twitter.com/arcbtc/status/1585627498510831616">Video tutorial</a>
 
