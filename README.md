@@ -17,19 +17,19 @@ For use with LNURLDevice in LNbits.
 
 |   
 
-https://user-images.githubusercontent.com/33088785/204106978-cc06be13-a89f-4e87-a9a9-86ff4f4c1907.mp4
+![switch-1](https://user-images.githubusercontent.com/33088785/204107016-bc9473e0-2843-4873-af71-cd934e07f444.gif)
 
      |    
+![switch-2](https://user-images.githubusercontent.com/33088785/204107029-cc4ad95b-b130-4b48-9091-86d7be7d4f16.gif)
 
-https://user-images.githubusercontent.com/33088785/204106985-3b29ec99-319e-4519-9eb5-e1c3f2918264.mp4
 
         |  
+![switch-3](https://user-images.githubusercontent.com/33088785/204107037-870571f8-b860-4019-93d4-bbdbeaf1091f.gif)
 
-https://user-images.githubusercontent.com/33088785/204106994-97addeda-0661-4d36-ae5c-0752deecbfa0.mp4
 
  | 
 
-https://user-images.githubusercontent.com/33088785/204107000-7ae7b037-09ed-4597-a1a5-9dca1021a589.mp4
+![switch-4](https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif)
 
   |
 | ------------- |:-------------:| -----:|-----:|
