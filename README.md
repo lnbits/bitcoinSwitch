@@ -14,18 +14,19 @@ For use with LNURLDevice in LNbits.
 ### ✅ Web-installer/config for easy setup
 
 ### ✅ Support for MULTIPLE GPIOS/LNURLs!!!
+  
 
  <div class="row">
-  <div class="column">
+  <div class="column" style="width:25%; padding: 5px; float: left;">
     <img src="https://user-images.githubusercontent.com/33088785/204107016-bc9473e0-2843-4873-af71-cd934e07f444.gif" alt="Snow" style="width:100%">
   </div>
-  <div class="column">
+  <div class="column" style="width:25%; padding: 5px; float: left;">
     <img src="https://user-images.githubusercontent.com/33088785/204107029-cc4ad95b-b130-4b48-9091-86d7be7d4f16.gif" alt="Forest" style="width:100%">
   </div>
-  <div class="column">
+  <div class="column" style="width:25%; padding: 5px; float: left;">
     <img src="https://user-images.githubusercontent.com/33088785/204107037-870571f8-b860-4019-93d4-bbdbeaf1091f.gif" alt="Mountains" style="width:100%">
   </div>
-   <div class="column">
+   <div class="column" style="width:25%; padding: 5px; float: left;">
     <img src="https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif" alt="Mountains" style="width:100%">
   </div>
 </div> 
