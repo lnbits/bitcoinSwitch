@@ -2,6 +2,11 @@
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166832680-600ed270-cbc9-4749-82f1-c1853b242329.png">
 
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166829474-a28ca2b7-dd3e-46d4-89d3-8a10bf1d3fad.png">
+
+### Flash and configure from browser! https://lnbits.github.io/bitcoinswitch/installer/
+
+> Press GPIO4 in first few seconds of boot to be able to config
+
    <table>
   <tr>
     <th><img src="https://user-images.githubusercontent.com/33088785/204107016-bc9473e0-2843-4873-af71-cd934e07f444.gif" alt="Snow" style="width:100%"></th>
@@ -27,10 +32,6 @@ For use with LNURLDevice in LNbits.
 > <a href="https://twitter.com/arcbtc/status/1585627498510831616">Video tutorial</a>
 
 > Join us! <a href="https://t.me/makerbits">t.me/makerbits</a>
-
-### Flash and configure from browser! https://lnbits.github.io/bitcoinswitch/installer/
-
-> Press GPIO4 in first few seconds of boot to be able to config
 
 ### Complicated install instructions not using browser flashing
 - Install <a href="https://www.arduino.cc/en/software">Arduino IDE 1.8.19</a>
