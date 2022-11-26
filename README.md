@@ -15,6 +15,23 @@ For use with LNURLDevice in LNbits.
 
 ### ✅ Support for MULTIPLE GPIOS/LNURLs!!!
   
+   <table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table> 
 
  <div class="row">
   <div class="column" style="width:25%; padding: 5px; float: left;">
