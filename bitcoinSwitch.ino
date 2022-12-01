@@ -92,8 +92,8 @@ void setup()
 
   pinMode(highPin.toInt(), OUTPUT);
   onOff();
-  Serial.println(lnbitsServer + "/lnurldevice/ws/" + deviceId);
-  webSocket.beginSSL(lnbitsServer, 443, "/lnurldevice/ws/" + deviceId);
+  Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
+  webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   webSocket.onEvent(webSocketEvent);
 }
 
@@ -179,7 +179,7 @@ void readFiles()
     const JsonObject maRoot3 = doc[3];
     const char *maRoot3Char = maRoot3["value"];
     serverFull = maRoot3Char;
-    lnbitsServer = serverFull.substring(5, serverFull.length() - 38);
+    lnbitsServer = serverFull.substring(5, serverFull.length() - 33);
     deviceId = serverFull.substring(serverFull.length() - 22);
 
     const JsonObject maRoot4 = doc[4];
