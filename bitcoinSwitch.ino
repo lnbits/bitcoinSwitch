@@ -90,8 +90,6 @@ void setup()
     configOverSerialPort();
   }
 
-  pinMode(highPin.toInt(), OUTPUT);
-  onOff();
   Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
   webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   webSocket.onEvent(webSocketEvent);
