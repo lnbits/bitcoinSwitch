@@ -16,7 +16,7 @@
   </tr>
 </table> 
 
-### 👉 An absolutely incredible ,a href="https://t.me/AxelHamburch">bitcoinSwitch</a> guide by Axel 👈
+### 👉 An absolutely incredible ,<a href="https://t.me/AxelHamburch">bitcoinSwitch</a> guide by Axel 👈
 
 ## Compatible with any ESP32 microcontroller.
 
