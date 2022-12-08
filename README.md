@@ -15,7 +15,7 @@
     <th><img src="https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif" alt="Mountains" style="width:100%"></th>
   </tr>
 </table> 
-
+### 👉 An absolutely incredible ,a href="https://t.me/AxelHamburch">bitcoinSwitch</a> guide by Axel 👈
 ## Compatible with any ESP32 microcontroller.
 
 For use with LNURLDevice in LNbits.
