@@ -28,6 +28,9 @@ long thresholdTime; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long
 fs::SPIFFSFS &FlashFS = SPIFFS;
 #define FORMAT_ON_FAIL true
 #define PARAM_FILE "/elements.json"
+
+String apiUrl = "/api/v1/ws/";
+
 String payloadStr;
 String lnbitsServer;
 String deviceId;
@@ -64,13 +67,13 @@ void setup()
     Serial.println("");
     Serial.println("Using threshold mode");
     Serial.println("Connecting to websocket: ws://" + lnbitsServer + "/api/v1/ws/" + wallet);
-    webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + wallet);
+    webSocket.beginSSL(lnbitsServer, 443, apiUrl + wallet);
   }
   else{ // Use in normal mode
     Serial.println("");
     Serial.println("Using normal mode");
     Serial.println("Connecting to websocket: ws://" + lnbitsServer + "/api/v1/ws/" + deviceId);
-    webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
+    webSocket.beginSSL(lnbitsServer, 443, apiUrl + deviceId);
   }
   webSocket.onEvent(webSocketEvent);
   webSocket.setReconnectInterval(1000);
@@ -169,7 +172,7 @@ void readFiles()
     else{
       Serial.println("");
       Serial.println("ssid password hardcoded");
-      Serial.println("SSID password: " + wifiPassword);    
+      Serial.println("SSID password: " + wifiPassword);
     }
     if(switchStr == "null"){ // check wifiPassword is not set above
       const JsonObject maRoot3 = doc[3];
@@ -211,7 +214,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
           payloadStr.toLowerCase();
           Serial.println("Data from socket" + payloadStr);
           paid = true;
-          case WStype_ERROR:      
+          case WStype_ERROR:
           case WStype_FRAGMENT_TEXT_START:
           case WStype_FRAGMENT_BIN_START:
           case WStype_FRAGMENT:
