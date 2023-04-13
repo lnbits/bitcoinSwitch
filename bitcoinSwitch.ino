@@ -22,9 +22,6 @@ String lnbitsServer;
 String ssid;
 String wifiPassword;
 String deviceId;
-String highPin;
-String timePin;
-String pinFlip;
 String dataId;
 String lnurl;
 
@@ -42,7 +39,6 @@ struct KeyValue {
 void setup()
 {
   Serial.begin(115200);
-
   int timer = 0;
   pinMode (2, OUTPUT);
 
@@ -90,11 +86,10 @@ void setup()
     configOverSerialPort();
   }
 
-  pinMode(highPin.toInt(), OUTPUT);
-  onOff();
   Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
   webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   webSocket.onEvent(webSocketEvent);
+  webSocket.setReconnectInterval(1000);
 }
 
 void loop() {
@@ -103,39 +98,23 @@ void loop() {
     delay(500);
   }
   digitalWrite(2, LOW);
-  paid = false;
+  payloadStr = "";
+  delay(2000);
   while(paid == false){
     webSocket.loop();
     if(paid){
-      Serial.println(payloadStr);
-      highPin = getValue(payloadStr, '-', 0);
-      Serial.println(highPin);
-      timePin = getValue(payloadStr, '-', 1);
-      Serial.println(timePin);
-      onOff();
+      pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
+      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+      delay(getValue(payloadStr, '-', 1).toInt());
+      digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
     }
   }
   Serial.println("Paid");
+  paid = false;
 }
 
 //////////////////HELPERS///////////////////
 
-void onOff()
-{ 
-  pinMode (highPin.toInt(), OUTPUT);
-  if(pinFlip == "true"){
-    digitalWrite(highPin.toInt(), LOW);
-    delay(timePin.toInt());
-    digitalWrite(highPin.toInt(), HIGH); 
-    delay(2000);
-  }
-  else{
-    digitalWrite(highPin.toInt(), HIGH);
-    delay(timePin.toInt());
-    digitalWrite(highPin.toInt(), LOW); 
-    delay(2000);
-  }
-}
 
 String getValue(String data, char separator, int index)
 {
@@ -212,20 +191,19 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         case WStype_CONNECTED:
             {
                 Serial.printf("[WSc] Connected to url: %s\n",  payload);
-                
 
-			    // send message to server when Connected
-				webSocket.sendTXT("Connected");
+          // send message to server when Connected
+        webSocket.sendTXT("Connected");
             }
             break;
         case WStype_TEXT:
             payloadStr = (char*)payload;
             paid = true;
-		case WStype_ERROR:			
-		case WStype_FRAGMENT_TEXT_START:
-		case WStype_FRAGMENT_BIN_START:
-		case WStype_FRAGMENT:
-		case WStype_FRAGMENT_FIN:
-			break;
+    case WStype_ERROR:      
+    case WStype_FRAGMENT_TEXT_START:
+    case WStype_FRAGMENT_BIN_START:
+    case WStype_FRAGMENT:
+    case WStype_FRAGMENT_FIN:
+      break;
     }
 }
