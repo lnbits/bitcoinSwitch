@@ -3,6 +3,7 @@
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>
+#include "MultiLed.h"
 
 fs::SPIFFSFS &FlashFS = SPIFFS;
 #define FORMAT_ON_FAIL true
@@ -11,6 +12,9 @@ fs::SPIFFSFS &FlashFS = SPIFFS;
 ///////////CHANGE////////////////
          
 int portalPin = 4;
+
+///////////STATUS LED////////////////
+MultiLed multiLed(32, 33, 25);
 
 /////////////////////////////////
 
@@ -28,6 +32,7 @@ String lnurl;
 bool paid;
 bool down = false;
 bool triggerConfig = false; 
+bool wsConnection = false;
 
 WebSocketsClient webSocket;
 
@@ -38,13 +43,17 @@ struct KeyValue {
 
 void setup()
 {
+  multiLed.setup();
   Serial.begin(115200);
   int timer = 0;
   pinMode (2, OUTPUT);
 
+  multiLed.setColor(MultiLed::COLOR_RED);
+
   while (timer < 2000)
   {
     digitalWrite(2, LOW);
+    multiLed.setColor(MultiLed::COLOR_OFF);
     Serial.println(touchRead(portalPin));
     if(touchRead(portalPin) < 40){
       Serial.println("Launch portal");
@@ -53,6 +62,7 @@ void setup()
     }
     delay(150);
     digitalWrite(2, HIGH);
+    multiLed.setColor(MultiLed::COLOR_RED);
     timer = timer + 300;
     delay(150);
   }
@@ -65,9 +75,12 @@ void setup()
   readFiles();
 
   if (triggerConfig == false){
+
     WiFi.begin(ssid.c_str(), wifiPassword.c_str());
     while (WiFi.status() != WL_CONNECTED && timer < 20000) {
       delay(500);
+      multiLed.setColor(MultiLed::COLOR_OFF);
+
       digitalWrite(2, HIGH);
       Serial.print(".");
       timer = timer + 1000;
@@ -75,6 +88,8 @@ void setup()
         triggerConfig = true;
       }
       delay(500);
+      multiLed.setColor(MultiLed::COLOR_BLUE);
+
       digitalWrite(2, LOW);
     }
   }
@@ -83,6 +98,18 @@ void setup()
   {
     digitalWrite(2, HIGH);
     Serial.println("USB Config triggered");
+
+    multiLed.setColor(MultiLed::COLOR_OFF);
+    delay(250);
+
+    for (int i = 0; i < 3; i++) {
+      multiLed.setColor(MultiLed::COLOR_GREEN);
+      delay(250);
+      multiLed.setColor(MultiLed::COLOR_RED);
+      delay(250);
+    }
+
+    multiLed.setColor(MultiLed::COLOR_BLUE);
     configOverSerialPort();
   }
 
@@ -95,18 +122,27 @@ void setup()
 void loop() {
   while(WiFi.status() != WL_CONNECTED){
     Serial.println("Failed to connect");
-    delay(500);
+    delay(250);
+    multiLed.setColor(MultiLed::COLOR_OFF);
+    delay(250);
+    multiLed.setColor(MultiLed::COLOR_BLUE);
   }
   digitalWrite(2, LOW);
   payloadStr = "";
   delay(2000);
   while(paid == false){
     webSocket.loop();
-    if(paid){
+
+    multiLed.setColor(wsConnection ? MultiLed::COLOR_GREEN : MultiLed::COLOR_RED);
+
+    if (paid) {
+      multiLed.setColor(MultiLed::COLOR_BLUE);
       pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
       delay(getValue(payloadStr, '-', 1).toInt());
+
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
+      multiLed.setColor(wsConnection ? MultiLed::COLOR_GREEN : MultiLed::COLOR_RED);
     }
   }
   Serial.println("Paid");
@@ -186,11 +222,13 @@ void checkConnection(){
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     switch(type) {
         case WStype_DISCONNECTED:
+            wsConnection = false;
             Serial.printf("[WSc] Disconnected!\n");
             break;
         case WStype_CONNECTED:
             {
-                Serial.printf("[WSc] Connected to url: %s\n",  payload);
+              wsConnection = true;
+              Serial.printf("[WSc] Connected to url: %s\n",  payload);
 
           // send message to server when Connected
         webSocket.sendTXT("Connected");

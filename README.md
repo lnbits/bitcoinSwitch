@@ -1,3 +1,30 @@
+# Status LED Addon for Bitcoin Switch
+
+I wanted a status indicator, to "see" without the serial connection to 
+check the status of a bitcoinSwitch project.
+
+## HowTo
+
+- Maybe: rename the project directory to `bitcoinSwitch` for the Arduino IDE
+- Add a Status LED like in this project [here](https://github.com/thespielplatz/hardware-playground/tree/main/MultiLED)
+- I am using a LED which has one anode and three cathodes for the color, this means `LOW` is `ON` and `HIGH` is `OFF`.
+- RED to pin#32, GREEN to pin#33 and BLUE to pin#25 with an  
+- Follow the awesome install instructions: "_Complicated install instructions not using browser flashing_" further down  this page
+
+### Status LED explanation
+
+| State                                  | LED                               |
+|----------------------------------------|-----------------------------------|
+| Startup                                | Solid Red                         |
+| Waiting, if config mode gets triggered | Blinking Red (2sec)               |
+| Config Mode                            | 3x Blink Green/Red --> Solid Blue |
+| Connecting 2 Wifi                      | Blinking Blue                     |
+| Connected 2 Wifi                       | Solid Blue                        |
+| WebSocket Connect & Ready for Payment  | Solid Green                       |
+| WebSocket Disconnect                   | Solid Red                         |
+| WebSocket Data for Payment received    | Solid Blue                        |
+
+# bitcoinSwitch (orignal repo)
 
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166832680-600ed270-cbc9-4749-82f1-c1853b242329.png">
 
