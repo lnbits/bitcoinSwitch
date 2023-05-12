@@ -1,6 +1,6 @@
 # Status LED Addon for Bitcoin Switch
 
-[![connected](images/ledaddon_green.png)](https://youtube.com/shorts/N0I8sqNY8uo)[![connected](images/ledaddon_blue.png)](https://youtube.com/shorts/N0I8sqNY8uo)
+[![connected](images/ledaddon_green.png)](https://youtube.com/shorts/giTMPoKyzK4)[![connected](images/ledaddon_blue.png)](https://youtube.com/shorts/giTMPoKyzK4)
 
 I wanted a status indicator, to "see" without the serial connection to 
 check the status of a bitcoinSwitch project. [See the demo](https://youtube.com/shorts/N0I8sqNY8uo?feature=share).

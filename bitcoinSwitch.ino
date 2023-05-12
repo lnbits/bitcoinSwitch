@@ -222,22 +222,23 @@ void checkConnection(){
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     switch(type) {
         case WStype_DISCONNECTED:
-            wsConnection = false;
             Serial.printf("[WSc] Disconnected!\n");
+            
+            wsConnection = false;
             break;
         case WStype_CONNECTED:
             {
-              wsConnection = true;
               Serial.printf("[WSc] Connected to url: %s\n",  payload);
+              // send message to server when Connected
+              webSocket.sendTXT("Connected");
 
-          // send message to server when Connected
-        webSocket.sendTXT("Connected");
+              wsConnection = true;
             }
             break;
         case WStype_TEXT:
             payloadStr = (char*)payload;
             paid = true;
-    case WStype_ERROR:      
+    case WStype_ERROR: 
     case WStype_FRAGMENT_TEXT_START:
     case WStype_FRAGMENT_BIN_START:
     case WStype_FRAGMENT:
