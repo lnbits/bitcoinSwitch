@@ -8,9 +8,13 @@ fs::SPIFFSFS &FlashFS = SPIFFS;
 #define FORMAT_ON_FAIL true
 #define PARAM_FILE "/elements.json"
 
-///////////CHANGE////////////////
-         
-int portalPin = 4;
+////////////////////////////////
+
+String wallet;
+int threshold = 0;
+int thresholdSum = 0;
+int thresholdPin = 0;
+int thresholdTime = 0;
 
 /////////////////////////////////
 
@@ -27,7 +31,6 @@ String lnurl;
 
 bool paid;
 bool down = false;
-bool triggerConfig = false; 
 
 WebSocketsClient webSocket;
 
@@ -39,55 +42,31 @@ struct KeyValue {
 void setup()
 {
   Serial.begin(115200);
-  int timer = 0;
   pinMode (2, OUTPUT);
-
-  while (timer < 2000)
-  {
-    digitalWrite(2, LOW);
-    Serial.println(touchRead(portalPin));
-    if(touchRead(portalPin) < 40){
-      Serial.println("Launch portal");
-      triggerConfig = true;
-      timer = 5000;
-    }
-    delay(150);
-    digitalWrite(2, HIGH);
-    timer = timer + 300;
-    delay(150);
-  }
-
-  timer = 0;
 
   FlashFS.begin(FORMAT_ON_FAIL);
 
   // get the saved details and store in global variables
   readFiles();
 
-  if (triggerConfig == false){
-    WiFi.begin(ssid.c_str(), wifiPassword.c_str());
-    while (WiFi.status() != WL_CONNECTED && timer < 20000) {
-      delay(500);
-      digitalWrite(2, HIGH);
-      Serial.print(".");
-      timer = timer + 1000;
-      if(timer > 19000){
-        triggerConfig = true;
-      }
-      delay(500);
-      digitalWrite(2, LOW);
-    }
-  }
-
-  if (triggerConfig == true)
-  {
+  WiFi.begin(ssid.c_str(), wifiPassword.c_str());
+  while (WiFi.status() != WL_CONNECTED && timer) {
+    Serial.println("Connecting to WiFi");
+    delay(500);
     digitalWrite(2, HIGH);
-    Serial.println("USB Config triggered");
-    configOverSerialPort();
+    Serial.print(".");
+    delay(500);
+    digitalWrite(2, LOW);
+  }
+  if(threshold != 0){
+    Serial.println(lnbitsServer + "/api/v1/ws/" + wallet);
+    webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + wallet);
+  }
+  else{
+    Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
+    webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   }
 
-  Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
-  webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   webSocket.onEvent(webSocketEvent);
   webSocket.setReconnectInterval(1000);
 }
@@ -103,10 +82,29 @@ void loop() {
   while(paid == false){
     webSocket.loop();
     if(paid){
-      pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
-      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-      delay(getValue(payloadStr, '-', 1).toInt());
-      digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
+      if(threshold == 0){
+        pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
+        digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+        delay(getValue(payloadStr, '-', 1).toInt());
+        digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
+      }
+      else{
+        StaticJsonDocument<2000> doc;
+        DeserializationError error = deserializeJson(doc, input);
+        if (error) {
+          Serial.print("deserializeJson() failed: ");
+          Serial.println(error.c_str());
+          return;
+        }
+        int payment_amount = payment["amount"];
+        thresholdSum = thresholdSum + payment_amount
+        if(threshold >= thresholdSum){
+          pinMode (thresholdPin, OUTPUT);
+          digitalWrite(thresholdPin, HIGH);
+          delay(thresholdTime);
+          digitalWrite(thresholdPin, LOW);
+        }
+      }
     }
   }
   Serial.println("Paid");
@@ -198,6 +196,9 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             break;
         case WStype_TEXT:
             payloadStr = (char*)payload;
+            if(threshold != 0){
+              payloadStr.replace("'", '"')
+            }
             paid = true;
     case WStype_ERROR:      
     case WStype_FRAGMENT_TEXT_START:
