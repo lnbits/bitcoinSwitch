@@ -109,7 +109,6 @@ void loop() {
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
     }
   }
-  Serial.println("Paid");
   paid = false;
 }
 
@@ -158,8 +157,37 @@ void readFiles()
     const JsonObject maRoot3 = doc[3];
     const char *maRoot3Char = maRoot3["value"];
     serverFull = maRoot3Char;
-    lnbitsServer = serverFull.substring(5, serverFull.length() - 33);
-    deviceId = serverFull.substring(serverFull.length() - 22);
+
+    // extract hostname
+    int start = -1;
+    int stop = -1;
+    if ( serverFull.startsWith("wss://") ) {
+      start = 6;             
+    } else if ( serverFull.startsWith("ws://") ) {
+      start = 5;
+    } else {
+      // invalid serverFull String, break operation
+      Serial.println("ServerFull does not start with ws:// or ws://");
+      return;
+    }
+
+    stop = serverFull.indexOf("/",start);
+    if ( stop == -1 ) {
+       Serial.println("No path in WebSocket URL");
+       return;
+    }
+
+    lnbitsServer = serverFull.substring(start, stop);
+    Serial.println(lnbitsServer);
+
+    // extract deviceId
+    start = serverFull.lastIndexOf("/");
+    if ( start == -1 ) {
+      Serial.println("No path in WebSocket URL");
+      return;
+    }
+    deviceId = serverFull.substring(start + 1);
+    Serial.println(deviceId);
 
     const JsonObject maRoot4 = doc[4];
     const char *maRoot4Char = maRoot4["value"];
