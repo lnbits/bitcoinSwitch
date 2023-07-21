@@ -44,10 +44,40 @@ const templates = Object.freeze({
                 "apply": "text"
             },
             {
-                "name": "lnurl",
+                "name": "wallet",
                 "type": "ACInput",
-                "value": "true",
-                "label": "LNURL",
+                "value": "",
+                "label": "Optional (for threshold), wallet ID from LNbits",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
+            },
+            {
+                "name": "threshold",
+                "type": "ACInput",
+                "value": "",
+                "label": "Optional (for threshold), amount to hit to trigger",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
+            },
+            {
+                "name": "thresholdPin",
+                "type": "ACInput",
+                "value": "",
+                "label": "Optional (for threshold), pin to trigger",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
+            },
+            {
+                "name": "thresholdTime",
+                "type": "ACInput",
+                "value": "",
+                "label": "Optional (for threshold), time to turn of for",
                 "pattern": "",
                 "placeholder": "",
                 "style": "",
