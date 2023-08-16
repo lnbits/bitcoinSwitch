@@ -1,3 +1,5 @@
 installer/main_assets
 .pio
-.vscode
+.DS_Store
+build/
+.vscode/
