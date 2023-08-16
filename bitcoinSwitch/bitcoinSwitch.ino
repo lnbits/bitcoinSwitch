@@ -40,6 +40,9 @@ bool down = false;
 long thresholdSum = 0;
 long payment_amount = 0;
 
+// Serial config
+int portalPin = 4;
+
 WebSocketsClient webSocket;
 
 struct KeyValue {
@@ -51,6 +54,25 @@ void setup()
 {
   Serial.begin(115200);
   pinMode (2, OUTPUT); // To blink on board LED
+
+  int timer = 0;
+  while (timer < 2000)
+  {
+    digitalWrite(2, HIGH);
+    Serial.println(touchRead(portalPin));
+    if (touchRead(portalPin) < 60)
+    {
+      Serial.println("Launch serial config");
+      configOverSerialPort();
+      timer = 5000;
+    }
+
+    timer = timer + 100;
+    delay(150);
+    digitalWrite(2, LOW);
+    delay(150);
+  }
+
   FlashFS.begin(FORMAT_ON_FAIL);
   readFiles(); // get the saved details and store in global variables
   WiFi.begin(ssid.c_str(), wifiPassword.c_str());
