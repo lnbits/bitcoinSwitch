@@ -14,7 +14,7 @@
     <th><img src="https://user-images.githubusercontent.com/33088785/204107037-870571f8-b860-4019-93d4-bbdbeaf1091f.gif" alt="Mountains" style="width:100%"></th>
     <th><img src="https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif" alt="Mountains" style="width:100%"></th>
   </tr>
-</table> 
+</table>
 
 ### 👉 An absolutely incredible ,<a href="https://ereignishorizont.xyz/bitcoinswitch/en/">bitcoinSwitch guide</a> by Axel 👈
 
@@ -47,3 +47,15 @@ For use with LNURLDevice in LNbits.
 - Upload to device
 
 ![trigger](https://user-images.githubusercontent.com/33088785/166829947-d0194b32-19fc-4a16-83d3-dc6f9af9337c.gif)
+
+
+### development
+fetch main assets from lnbits.github.io
+```console
+sh build.sh
+```
+start preview
+```console
+cd installer
+http-server -p 8080
+```
