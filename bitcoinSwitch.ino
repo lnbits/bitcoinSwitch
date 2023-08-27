@@ -95,7 +95,6 @@ void loop() {
           Serial.println(error.c_str());
           return;
         }
-        Serial.print("cunt");
         JsonObject payment = doc["payment"];
         payment_amount = payment["amount"];
         thresholdSum = thresholdSum + payment_amount;
