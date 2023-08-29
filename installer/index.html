@@ -105,10 +105,16 @@
                                     </a>
                                 </div>
                                 <div class="col-4">
-                                    <select id="binVersionOption" onchange="updateBinVersion(this)"
-                                        class="ud-main-btn ud-white-btn">
-                                        <option value="v0.1">v0.1</option>
-                                    </select>
+                                    <select id="binVersionOption" onchange="updateBinVersion(this)" class="ud-main-btn ud-white-btn"></select>
+                                    <script>
+                                        const el = document.getElementById('binVersionOption');
+                                        const response = fetch('/versions.json').then(async response => {
+                                            const versions = await response.json();
+                                            versions.versions.forEach(version => {
+                                                el.options.add(new Option(version, version))
+                                            });
+                                        });
+                                    </script>
 
                                 </div>
                                 <div class="col-4">Stable Version
