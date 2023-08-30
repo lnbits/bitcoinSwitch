@@ -28,8 +28,6 @@ jobs:
             - bitcoinSwitch
           libraries: |
             - name: WebSockets
-              version: 2.3.7
             - name: ArduinoJson
-              version: 6.21.3
           cli-compile-flags: |
             - --warnings="none"
