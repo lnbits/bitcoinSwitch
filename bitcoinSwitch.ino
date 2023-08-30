@@ -66,13 +66,13 @@ void setup()
   if(threshold != 0){ // Use in threshold mode
     Serial.println("");
     Serial.println("Using threshold mode");
-    Serial.println("Connecting to websocket: ws://" + lnbitsServer + "/api/v1/ws/" + wallet);
+    Serial.println("Connecting to websocket: ws://" + lnbitsServer + apiUrl + wallet);
     webSocket.beginSSL(lnbitsServer, 443, apiUrl + wallet);
   }
   else{ // Use in normal mode
     Serial.println("");
     Serial.println("Using normal mode");
-    Serial.println("Connecting to websocket: ws://" + lnbitsServer + "/api/v1/ws/" + deviceId);
+    Serial.println("Connecting to websocket: ws://" + lnbitsServer + apiUrl + deviceId);
     webSocket.beginSSL(lnbitsServer, 443, apiUrl + deviceId);
   }
   webSocket.onEvent(webSocketEvent);
