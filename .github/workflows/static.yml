@@ -9,6 +9,9 @@ on:
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
 
+    # Allows you to run this workflow from other workflows
+    workflow_cal:
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
     contents: read
@@ -31,7 +34,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
             - name: copy main assets
-              run: sh build.sh
+              run: sh build-webinstaller.sh
             - name: Setup Pages
               uses: actions/configure-pages@v3
             - name: Upload artifact

@@ -50,9 +50,13 @@ For use with LNURLDevice in LNbits.
 
 
 ### development
-fetch main assets from lnbits.github.io
+build with arduino-cli
 ```console
 sh build.sh
+```
+build webinstaller, fetch main assets from lnbits.github.io
+```console
+sh build-installer.sh
 ```
 start preview
 ```console
