@@ -3,7 +3,7 @@
 
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166829474-a28ca2b7-dd3e-46d4-89d3-8a10bf1d3fad.png">
 
-### Flash and configure from browser! https://lnbits.github.io/bitcoinswitch/installer/
+### Flash and configure from browser! https://bitcoinswitch.lnbits.com/
 
 > Once flashed, press GPIO4 in few seconds of ESP32 booting up to be able to config
 
