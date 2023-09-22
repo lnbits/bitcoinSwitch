@@ -106,24 +106,29 @@
                                 </div>
                                 <div class="col-4">
                                     <select id="binVersionOption" onchange="updateBinVersion(this)" class="ud-main-btn ud-white-btn"></select>
-                                    <script>
-                                        const el = document.getElementById('binVersionOption');
-                                        const response = fetch('/versions.json').then(async response => {
-                                            const versions = await response.json();
-                                            versions.versions.forEach(version => {
-                                                el.options.add(new Option(version, version))
-                                            });
-                                        });
-                                    </script>
 
                                 </div>
                                 <div class="col-4">Stable Version
+                                    <!-- manifest="./firmware/esp32/v0.1/manifest.json"> -->
                                     <esp-web-install-button id="espInstallButton"
-                                        manifest="./firmware/esp32/v0.1/manifest.json">
                                         <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                             data-placement="bottom" title="Flasn">Flash</button>
                                     </esp-web-install-button>
                                 </div>
+                                <!-- dynamic version magic -->
+                                <script>
+                                    const el = document.getElementById('binVersionOption');
+                                    const el2 = document.getElementById('espInstallButton');
+                                    const response = fetch('/versions.json').then(async response => {
+                                        const versions = await response.json();
+                                        const latestVersion = versions.versions[0];
+                                        el2.setAttribute('manifest', "./firmware/esp32/"+latestVersion+"/manifest.json";
+                                        versions.versions.forEach(version => {
+                                            el.options.add(new Option(version, version))
+                                        });
+                                    });
+                                </script>
+
                                 <div class="col-2">
                                     <label class="switch float-end mt-2">
                                         <input id="showConfigToggle" onclick="onToggleConfig(this)" type="checkbox">
