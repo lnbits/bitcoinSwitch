@@ -11,5 +11,3 @@ cp build/bootloader.bin dist/$tag
 
 cp build/manifest.template.json dist/$tag/manifest.json
 sed -i -e "s/%version%/$tag/g" dist/$tag/manifest.json
-
-zip -r firmware.zip dist

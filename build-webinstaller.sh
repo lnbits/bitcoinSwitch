@@ -6,8 +6,11 @@ rm -rf mainpage
 mkdir -p ./installer/firmware/esp32
 
 for version in $(jq -r '.versions[]' ./installer/versions.json); do
-    rm -f firmware.zip
-    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/firmware.zip
-    unzip firmware.zip -d ./installer/firmware/esp32
-    rm firmware.zip
+    mkdir -p ./installer/firmware/esp32/$version
+    cd ./installer/firmware/esp32/$version
+    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/manifest.json
+    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/bootloader.bin
+    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/boot_app0.bin
+    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/bitcoinSwitch.ino.bin
+    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/bitcoinSwitch.ino.partitions.bin
 done
