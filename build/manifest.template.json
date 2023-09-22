@@ -8,19 +8,19 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "firmware/esp32/%version%/bootloader.bin",
+          "path": "bootloader.bin",
           "offset": 4096
         },
         {
-          "path": "firmware/esp32/%version%/bitcoinSwitch.ino.partitions.bin",
+          "path": "bitcoinSwitch.ino.partitions.bin",
           "offset": 32768
         },
         {
-          "path": "firmware/esp32/%version%/boot_app0.bin",
+          "path": "boot_app0.bin",
           "offset": 57344
         },
         {
-          "path": "firmware/esp32/%version%/bitcoinSwitch.ino.bin",
+          "path": "bitcoinSwitch.ino.bin",
           "offset": 65536
         }
       ]
