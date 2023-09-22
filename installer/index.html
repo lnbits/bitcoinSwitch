@@ -122,7 +122,7 @@
                                     const response = fetch('/versions.json').then(async response => {
                                         const versions = await response.json();
                                         const latestVersion = versions.versions[0];
-                                        el2.setAttribute('manifest', "./firmware/esp32/"+latestVersion+"/manifest.json"k;
+                                        el2.setAttribute('manifest', "./firmware/esp32/"+latestVersion+"/manifest.json";
                                         versions.versions.forEach(version => {
                                             el.options.add(new Option(version, version))
                                         });
