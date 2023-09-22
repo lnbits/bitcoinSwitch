@@ -47,7 +47,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
-          gh release create "$tag" --generate-notes ./firmware.zip
+          gh release create "$tag" --generate-notes ./firmware.zip ./dist/$tag/manifest.json ./dist/$tag/bootloader.bin \
+            ./dist/$tag/boot_app0.bin ./dist/$tag/bitcoinSwitch.ino.bin ./dist/$tag/bitcoinSwitch.ino.partitions.bin
 
   pages:
     needs: [ release ]
