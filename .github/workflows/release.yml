@@ -25,7 +25,7 @@ jobs:
           tag: ${{ github.ref_name }}
         run: |
           tmp=$(mktemp)
-          jq --arg version "$version" '.versions |= [$version] + .' installer/versions.json > "$tmp" && mv "$tmp" installer/versions.json
+          jq --arg version $tag '.versions |= [$version] + .' installer/versions.json > "$tmp" && mv "$tmp" installer/versions.json
           git config --global user.name 'Alan Bits'
           git config --global user.email 'alan@lnbits.com'
           git commit -am "[CHORE] update version to $tag"
