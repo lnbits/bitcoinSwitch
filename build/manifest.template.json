@@ -1,0 +1,29 @@
+{
+  "name": "LNbits bitcoinSwitch",
+  "version": "%version%",
+  "funding_url": "https://github.com/lnbits/bitcoinSwitch",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "firmware/esp32/%version%/bootloader.bin",
+          "offset": 4096
+        },
+        {
+          "path": "firmware/esp32/%version%/bitcoinSwitch.ino.partitions.bin",
+          "offset": 32768
+        },
+        {
+          "path": "firmware/esp32/%version%/boot_app0.bin",
+          "offset": 57344
+        },
+        {
+          "path": "firmware/esp32/%version%/bitcoinSwitch.ino.bin",
+          "offset": 65536
+        }
+      ]
+    }
+  ]
+}

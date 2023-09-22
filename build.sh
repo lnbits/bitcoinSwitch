@@ -1,13 +1,6 @@
 #!/bin/sh
-git clone https://github.com/lnbits/lnbits.github.io mainpage
-cp -r ./mainpage/assets ./installer/main_assets
-rm -rf mainpage
-
-mkdir -p ./installer/firmware/esp32
-
-for version in $(jq -r '.versions[]' ./installer/versions.json); do
-    mkdir -p ./installer/firmware/esp32/$version
-    wget https://github.com/lnbits/bitcoinswitch/releases/download/$version/firmware.zip
-    unzip firmware.zip -d ./installer/firmware/esp32
-    rm firmware.zip
-done
+command -v arduino-cli >/dev/null 2>&1 || { echo >&2 "arduino-cli not found. Aborting."; exit 1; }
+arduino-cli config --additional-urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json init
+arduino-cli core update-index
+arduino-cli lib install WebSockets ArduinoJson
+arduino-cli compile --build-path build --fqbn esp32:esp32:esp32 bitcoinSwitch/bitcoinSwitch.ino
