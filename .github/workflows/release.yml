@@ -40,7 +40,7 @@ jobs:
           tag: ${{ github.ref_name }}
         run: |
           sh build.sh
-          sh release.sh
+          sh release.sh $tag
 
       - name: Create github release
         env:
