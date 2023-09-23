@@ -5,4 +5,4 @@ arduino-cli core update-index
 arduino-cli core install esp32:esp32
 arduino-cli upgrade
 arduino-cli lib install WebSockets ArduinoJson
-arduino-cli compile --build-path build --fqbn esp32:esp32:esp32 bitcoinSwitch/bitcoinSwitch.ino
+arduino-cli compile --build-path build --fqbn esp32:esp32:ttgo-lora32 bitcoinSwitch
