@@ -3,8 +3,5 @@ installer/firmware
 .pio
 .vscode
 dist
-build/*
-!build/manifest.template.json
-!build/boot_app0.bin
-!build/bootloader.bin
+build
 firmware.zip
