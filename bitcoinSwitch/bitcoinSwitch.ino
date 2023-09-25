@@ -54,7 +54,7 @@ void setup()
 {
   Serial.begin(115200);
   pinMode (2, OUTPUT); // To blink on board LED
-
+  FlashFS.begin(FORMAT_ON_FAIL);
   int timer = 0;
   while (timer < 2000)
   {
@@ -62,8 +62,7 @@ void setup()
     Serial.println(touchRead(portalPin));
     if (touchRead(portalPin) < 60)
     {
-      Serial.println("Launch serial config");
-      configOverSerialPort();
+      triggerConfig = true;
       timer = 5000;
     }
 
@@ -72,19 +71,26 @@ void setup()
     digitalWrite(2, LOW);
     delay(150);
   }
-
-  FlashFS.begin(FORMAT_ON_FAIL);
+  
   readFiles(); // get the saved details and store in global variables
-  WiFi.begin(ssid.c_str(), wifiPassword.c_str());
-  Serial.print("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(500);
-    digitalWrite(2, HIGH);
-    Serial.print(".");
-    delay(500);
-    digitalWrite(2, LOW);
+  
+  if(triggerConfig == true || ssid == "" || ssid == "null"){
+      Serial.println("Launch serial config");
+      configOverSerialPort();
   }
+  else{
+     WiFi.begin(ssid.c_str(), wifiPassword.c_str());
+     Serial.print("Connecting to WiFi");
+     while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        delay(500);
+        digitalWrite(2, HIGH);
+        Serial.print(".");
+        delay(500);
+        digitalWrite(2, LOW);
+     }
+  }
+
   if(threshold != 0){ // Use in threshold mode
     Serial.println("");
     Serial.println("Using threshold mode");
@@ -166,6 +172,7 @@ String getValue(String data, char separator, int index)
 void readFiles()
 {
   File paramFile = FlashFS.open(PARAM_FILE, "r");
+  Serial.println(paramFile.readString());
   if (paramFile)
   {
     StaticJsonDocument<1500> doc;
