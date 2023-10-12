@@ -177,11 +177,14 @@ String getValue(String data, char separator, int index)
 
 String getJsonValue(JsonDocument &doc, String key)
 {
-  for (int i = 0; i < doc.size(); i++)
-  {
-    if (doc[i]["name"] == key)
+  JsonArray array = doc.as<JsonArray>();
+  for (JsonObject obj : array) {
+    String name = obj["name"];
+    Serial.println(name);
+    if (name == key)
     {
-      String value = doc[i]["value"];
+      String value = obj["value"];
+      Serial.println(value);
       return value;
     }
   }
