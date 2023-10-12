@@ -8,8 +8,8 @@ jobs:
       matrix:
         fqbn:
           - esp32:esp32:esp32
-          - esp32:esp32:esp32s3
-          - esp32:esp32:esp32c3
+          # - esp32:esp32:esp32s3
+          # - esp32:esp32:esp32c3
           # future bluetooth chips
           #- esp32:esp32:esp32c2
           #- esp32:esp32:esp32c6
