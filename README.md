@@ -65,6 +65,10 @@ http-server -p 8080
 ```
 
 ### arduino-cli
+compiling
+```console
+arduino-cli compile --build-path build --fqbn esp32:esp32:esp32 bitcoinSwitch
+```
 monitoring
 ```console
 arduino-cli monitor -p /dev/ttyUSB1 -c baudrate=115200
