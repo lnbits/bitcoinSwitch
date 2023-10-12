@@ -175,30 +175,33 @@ String getValue(String data, char separator, int index)
     return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
-String getJsonValue(JsonDocument &doc, String key)
+String getJsonValue(JsonDocument &doc, const char* name)
 {
-  JsonArray array = doc.as<JsonArray>();
-  for (JsonObject obj : array) {
-    String name = obj["name"];
-    Serial.println(name);
-    if (name == key)
-    {
-      String value = obj["value"];
-      Serial.println(value);
-      return value;
+      for (JsonObject elem : doc.as<JsonArray>()) {
+        Serial.println("elem[name]: " + String(elem["name"].as<String>()));
+        if (strcmp(elem["name"], name) == 0) {
+            String value = elem["value"].as<String>();
+            Serial.println(value);
+            return value;
+        }
     }
-  }
-  return "json error: could not find key: " + key;
+    Serial.println("Name not found!");
+    return "";  // return empty string if not found
 }
 
 void readFiles()
 {
   File paramFile = FlashFS.open(PARAM_FILE, "r");
-  Serial.println(paramFile.readString());
+  // Serial.println(paramFile.readString());
   if (paramFile)
   {
-    StaticJsonDocument<1500> doc;
+    StaticJsonDocument<2500> doc;
     DeserializationError error = deserializeJson(doc, paramFile.readString());
+    if(error){
+      Serial.print("deserializeJson() failed: ");
+      Serial.println(error.c_str());
+      return;
+    }
     if(ssid == "null"){ // check ssid is not set above
       ssid = getJsonValue(doc, "ssid");
       Serial.println("");
