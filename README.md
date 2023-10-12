@@ -63,3 +63,17 @@ start preview
 cd installer
 http-server -p 8080
 ```
+
+### arduino-cli
+compiling
+```console
+arduino-cli compile --build-path build --fqbn esp32:esp32:esp32 bitcoinSwitch
+```
+monitoring
+```console
+arduino-cli monitor -p /dev/ttyUSB1 -c baudrate=115200
+```
+uploading
+```console
+arduino-cli upload --fqbn esp32:esp32:esp32 --input-dir build -p /dev/ttyUSB1
+```
