@@ -53,6 +53,7 @@ struct KeyValue {
 void setup()
 {
   Serial.begin(115200);
+  bool triggerConfig = false;
   pinMode (2, OUTPUT); // To blink on board LED
   FlashFS.begin(FORMAT_ON_FAIL);
   int timer = 0;
@@ -71,9 +72,9 @@ void setup()
     digitalWrite(2, LOW);
     delay(150);
   }
-  
+
   readFiles(); // get the saved details and store in global variables
-  
+
   if(triggerConfig == true || ssid == "" || ssid == "null"){
       Serial.println("Launch serial config");
       configOverSerialPort();
