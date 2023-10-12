@@ -272,7 +272,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             payloadStr = (char*)payload;
             payloadStr.replace(String("'"), String('"'));
             payloadStr.toLowerCase();
-            Serial.println("Recevied data from socket: " + payloadStr);
+            Serial.println("Received data from socket: " + payloadStr);
             paid = true;
         case WStype_ERROR:
         case WStype_FRAGMENT_TEXT_START:
