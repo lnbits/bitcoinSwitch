@@ -32,6 +32,10 @@ fs::SPIFFSFS &FlashFS = SPIFFS;
 String urlPrefix = "ws://";
 String apiUrl = "/api/v1/ws/";
 
+// length of lnurldevice id
+// 7dhdyJ9bbZNWNVPiFSdmb5
+int uidLength = 22;
+
 String payloadStr;
 String lnbitsServer;
 String deviceId;
@@ -225,10 +229,6 @@ void readFiles()
       Serial.println("switchStr hardcoded");
       Serial.println("switchStr: " + switchStr);
     }
-
-    // 7dhdyJ9bbZNWNVPiFSdmb5
-    int uidLength = 22;
-    int prefixLength = 0;
 
     int protocolIndex = switchStr.indexOf("://");
     if (protocolIndex == -1) {
