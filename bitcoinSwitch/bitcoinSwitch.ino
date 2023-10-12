@@ -178,21 +178,17 @@ String getValue(String data, char separator, int index)
 String getJsonValue(JsonDocument &doc, const char* name)
 {
       for (JsonObject elem : doc.as<JsonArray>()) {
-        Serial.println("elem[name]: " + String(elem["name"].as<String>()));
         if (strcmp(elem["name"], name) == 0) {
             String value = elem["value"].as<String>();
-            Serial.println(value);
             return value;
         }
     }
-    Serial.println("Name not found!");
     return "";  // return empty string if not found
 }
 
 void readFiles()
 {
   File paramFile = FlashFS.open(PARAM_FILE, "r");
-  // Serial.println(paramFile.readString());
   if (paramFile)
   {
     StaticJsonDocument<2500> doc;
