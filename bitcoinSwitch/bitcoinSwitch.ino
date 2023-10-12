@@ -29,6 +29,7 @@ fs::SPIFFSFS &FlashFS = SPIFFS;
 #define FORMAT_ON_FAIL true
 #define PARAM_FILE "/elements.json"
 
+String urlPrefix = "ws://";
 String apiUrl = "/api/v1/ws/";
 
 String payloadStr;
@@ -95,13 +96,13 @@ void setup()
   if(threshold != 0){ // Use in threshold mode
     Serial.println("");
     Serial.println("Using threshold mode");
-    Serial.println("Connecting to websocket: ws://" + lnbitsServer + apiUrl + wallet);
+    Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + wallet);
     webSocket.beginSSL(lnbitsServer, 443, apiUrl + wallet);
   }
   else{ // Use in normal mode
     Serial.println("");
     Serial.println("Using normal mode");
-    Serial.println("Connecting to websocket: ws://" + lnbitsServer + apiUrl + deviceId);
+    Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + deviceId);
     webSocket.beginSSL(lnbitsServer, 443, apiUrl + deviceId);
   }
   webSocket.onEvent(webSocketEvent);
@@ -170,6 +171,19 @@ String getValue(String data, char separator, int index)
     return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
+String getJsonValue(JsonDocument &doc, String key)
+{
+  for (int i = 0; i < doc.size(); i++)
+  {
+    if (doc[i]["name"] == key)
+    {
+      String value = doc[i]["value"];
+      return value;
+    }
+  }
+  return "json error: could not find key: " + key;
+}
+
 void readFiles()
 {
   File paramFile = FlashFS.open(PARAM_FILE, "r");
@@ -179,9 +193,7 @@ void readFiles()
     StaticJsonDocument<1500> doc;
     DeserializationError error = deserializeJson(doc, paramFile.readString());
     if(ssid == "null"){ // check ssid is not set above
-      const JsonObject maRoot1 = doc[1];
-      const char *maRoot1Char = maRoot1["value"];
-      ssid = maRoot1Char;
+      ssid = getJsonValue(doc, "ssid");
       Serial.println("");
       Serial.println("ssid used from memory");
       Serial.println("SSID: " + ssid);
@@ -192,9 +204,7 @@ void readFiles()
       Serial.println("SSID: " + ssid);
     }
     if(wifiPassword == "null"){ // check wifiPassword is not set above
-      const JsonObject maRoot2 = doc[2];
-      const char *maRoot2Char = maRoot2["value"];
-      wifiPassword = maRoot2Char;
+      wifiPassword = getJsonValue(doc, "wifipassword");
       Serial.println("");
       Serial.println("ssid password used from memory");
       Serial.println("SSID password: " + wifiPassword);
@@ -204,10 +214,8 @@ void readFiles()
       Serial.println("ssid password hardcoded");
       Serial.println("SSID password: " + wifiPassword);
     }
-    if(switchStr == "null"){ // check wifiPassword is not set above
-      const JsonObject maRoot3 = doc[3];
-      const char *maRoot3Char = maRoot3["value"];
-      switchStr = maRoot3Char;
+    if(switchStr == "null"){ // check switchStr is not set above
+      switchStr = getJsonValue(doc, "socket");
       Serial.println("");
       Serial.println("switchStr used from memory");
       Serial.println("switchStr: " + switchStr);
@@ -217,9 +225,31 @@ void readFiles()
       Serial.println("switchStr hardcoded");
       Serial.println("switchStr: " + switchStr);
     }
-    lnbitsServer = switchStr.substring(5, switchStr.length() - 33);
-    deviceId = switchStr.substring(switchStr.length() - 22);
+
+    // 7dhdyJ9bbZNWNVPiFSdmb5
+    int uidLength = 22;
+    int prefixLength = 0;
+
+    int protocolIndex = switchStr.indexOf("://");
+    if (protocolIndex == -1) {
+      Serial.println("Invalid switchStr: " + switchStr);
+      return;
+    }
+    urlPrefix = switchStr.substring(0, protocolIndex + 3);
+
+    int domainIndex = switchStr.indexOf("/", protocolIndex + 3);
+    if (domainIndex == -1) {
+      Serial.println("Invalid switchStr: " + switchStr);
+      return;
+    }
+
+    lnbitsServer = switchStr.substring(protocolIndex + 3, domainIndex);
+    apiUrl = switchStr.substring(domainIndex, switchStr.length() - uidLength);
+    deviceId = switchStr.substring(switchStr.length() - uidLength);
+
+    Serial.println("LNbits ws prefix: " + urlPrefix);
     Serial.println("LNbits server: " + lnbitsServer);
+    Serial.println("LNbits api url: " + apiUrl);
     Serial.println("Switch device ID: " + deviceId);
   }
   paramFile.close();
