@@ -3,6 +3,8 @@
 //  form in the web-installer https://lnbits.github.io/bitcoinswitch/installer/  //
 ///////////////////////////////////////////////////////////////////////////////////
 
+String version = "0.1.1";
+
 String ssid = "null"; // 'String ssid = "ssid";' / 'String ssid = "null";'
 String wifiPassword = "null"; // 'String wifiPassword = "password";' / 'String wifiPassword = "null";'
 
@@ -58,6 +60,7 @@ struct KeyValue {
 void setup()
 {
     Serial.begin(115200);
+    Serial.println("Welcome to BitcoinSwitch, running on version: " + version);
     bool triggerConfig = false;
     pinMode (2, OUTPUT); // To blink on board LED
     FlashFS.begin(FORMAT_ON_FAIL);
