@@ -24,6 +24,7 @@ export const elements = [
     name: "password",
     value: "ToTheMoon1",
     label: "Password for PoS AP WiFi",
+    type: "text",
   },
   {
     name: "ssid",
