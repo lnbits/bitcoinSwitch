@@ -1,0 +1,10 @@
+{
+  "name": "bitcoinSwitch",
+  "devices": [
+    "esp32"
+  ],
+  "versions": [
+    "v0.1.1",
+    "v0.1.0"
+  ]
+}
