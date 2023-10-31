@@ -1,10 +1,10 @@
 #!/bin/sh
 PROJECT_NAME=bitcoinSwitch
-REPO=https://github.com/lnbits/hardware-installer
-RELEASE=$REPO/releases/download
+RELEASE=https://github.com/lnbits/bitcoinSwitch/releases/download
+INSTALLER_REPO=https://github.com/lnbits/hardware-installer
 INSTALLER_PATH=./hardware-installer/public/firmware
 
-git clone $REPO
+git clone $INSTALLER_REPO
 
 cp README.md ./hardware-installer/public/README.md
 cp versions.json ./hardware-installer/src/versions.json
