@@ -3,7 +3,18 @@
 # Clicky, the Bitcoin Switch
 
 👉 An absolutely incredible <a href="https://ereignishorizont.xyz/bitcoinswitch/en/">bitcoinSwitch guide</a> by [Axel](https://github.com/AxelHamburch/) 👈
+
 Also check out our <a href="https://twitter.com/arcbtc/status/1585627498510831616">video tutorial</a>.
+
+
+✅ $8 worth parts / 15min setup
+
+✅ Websockets for blazingly fast turning on the things
+
+✅ Web-installer/config for easy setup
+
+✅ Support for MULTIPLE GPIOS/LNURLs (!)
+
 
 # Flash and configure via webinstaller https://bitcoinswitch.lnbits.com/
 
@@ -18,19 +29,15 @@ Have a look at the [LNbits shop](https://shop.lnbits.com/product-category/hardwa
 
 
 ### What you need
-- any esp32 will do
-- a high-level relais
-- few female-to-male and male-to-male cables
-- Something to turn on
-- LNbits LNURLdevice extension
-
-✅ $8 worth parts / 15min setup
-
-✅ Websockets for blazingly fast turning on the things
-
-✅ Web-installer/config for easy setup
-
-✅ Support for MULTIPLE GPIOS/LNURLs (!)
+- esp32 dev kit
+- something to turn on
+- Relais
+- female to male and male to male cables
+- Data Cable
+- Optional: a case
+- Desktop PC
+- LNbits LNURLdevice Extension
+  
 
    <table>
   <tr>
@@ -47,7 +54,8 @@ Once flashed, press GPIO4 in few seconds of ESP32 booting up to be able to confi
 Got questions ? Join us <a href="https://t.me/lnbits">t.me/lnbits</a>, <a href="https://t.me/makerbits">t.me/makerbits</a>
 
 
-### Complicated install instructions not using browser flashing
+## Complicated install instructions not using browser flashing
+
 - Install <a href="https://www.arduino.cc/en/software">Arduino IDE 1.8.19</a>
 - Install ESP32 boards, using <a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-boards-manager">boards manager</a>
 ![image](https://user-images.githubusercontent.com/33088785/161862832-1269a12e-16ce-427c-9a92-df3ee573a1fb.png)
