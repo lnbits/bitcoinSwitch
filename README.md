@@ -30,13 +30,13 @@ Have a look at the [LNbits shop](https://shop.lnbits.com/product-category/hardwa
 
 ### What you need
 - esp32 dev kit
-- something to turn on
-- Relais
-- female to male and male to male cables
-- Data Cable
+- High level relais
+- Female to male and male to male cables
+- Data cable
 - Optional: a case
 - Desktop PC
 - LNbits LNURLdevice Extension
+- Something to turn on
   
 
    <table>
