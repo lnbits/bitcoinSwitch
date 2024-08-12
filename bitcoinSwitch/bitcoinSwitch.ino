@@ -12,8 +12,8 @@ String wifiPassword = "null"; // 'String wifiPassword = "password";' / 'String w
 String switchStr = "null"; // 'String switchStr = "ws url";' / 'String switchStr = "null";'
 
 // Change for threshold trigger only
-String wallet; // ID for the LNbits wallet you want to watch,  'String wallet = "walley ID";' / 'String wallet = "null";'
-long threshold; // In sats, 'long threshold = 0;' / 'long threshold = 100;'
+String thresholdInkey; // Invoice/read key for the LNbits wallet you want to watch,  'String thresholdInkey = "key";' / 'String thresholdInkey = "null";'
+long thresholdAmount; // In sats, 'long thresholdAmount = 0;' / 'long thresholdAmount = 100;'
 int thresholdPin; // GPIO pin, 'int thresholdPin = 16;' / 'int thresholdPin;'
 long thresholdTime; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long thresholdTime;'
 
@@ -100,11 +100,11 @@ void setup()
         }
     }
 
-    if(threshold != 0){ // Use in threshold mode
+    if(thresholdAmount != 0){ // Use in threshold mode
         Serial.println("");
         Serial.println("Using threshold mode");
-        Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + wallet);
-        webSocket.beginSSL(lnbitsServer, 443, apiUrl + wallet);
+        Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + thresholdInkey);
+        webSocket.beginSSL(lnbitsServer, 443, apiUrl + thresholdInkey);
     }
     else{ // Use in normal mode
         Serial.println("");
@@ -127,7 +127,7 @@ void loop() {
     while(paid == false){ // loop and wait for payment
         webSocket.loop();
         if(paid){
-            if(threshold != 0){ // If in threshold mode we check the "balance" pushed by the websocket and use the pin/time preset
+            if(thresholdAmount != 0){ // If in threshold mode we check the "balance" pushed by the websocket and use the pin/time preset
                 StaticJsonDocument<1900> doc;
                 DeserializationError error = deserializeJson(doc, payloadStr);
                 if (error) {
@@ -139,9 +139,9 @@ void loop() {
                 payment_amount = payment["amount"];
                 thresholdSum = thresholdSum + payment_amount;
                 Serial.println("thresholdSum: " + String(thresholdSum));
-                Serial.println("threshold: " + String((threshold * 1000)));
+                Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)));
                 Serial.println("thresholdPin: " + String(thresholdPin));
-                if(thresholdSum >= (threshold * 1000)){
+                if(thresholdSum >= (thresholdAmount * 1000)){
                     pinMode (thresholdPin, OUTPUT);
                     digitalWrite(thresholdPin, HIGH);
                     delay(thresholdTime);
