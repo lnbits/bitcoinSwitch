@@ -98,12 +98,12 @@ void setup() {
 
     if (thresholdAmount != 0) { // Use in threshold mode
         Serial.println("");
-        Serial.println("Using threshold mode");
+        Serial.println("Using THRESHOLD mode");
         Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + thresholdInkey);
         webSocket.beginSSL(lnbitsServer, 443, apiUrl + thresholdInkey);
     } else { // Use in normal mode
         Serial.println("");
-        Serial.println("Using normal mode");
+        Serial.println("Using NORMAL mode");
         Serial.println("Connecting to websocket: " + urlPrefix + lnbitsServer + apiUrl + deviceId);
         webSocket.beginSSL(lnbitsServer, 443, apiUrl + deviceId);
     }
@@ -194,21 +194,21 @@ void readFiles() {
         if (ssid == "null") { // check ssid is not set above
             ssid = getJsonValue(doc, "ssid");
             Serial.println("");
-            Serial.println("ssid used from memory");
+            Serial.println("SSID used from memory");
             Serial.println("SSID: " + ssid);
         } else {
             Serial.println("");
-            Serial.println("ssid hardcoded");
+            Serial.println("SSID hardcoded");
             Serial.println("SSID: " + ssid);
         }
         if (wifiPassword == "null") { // check wifiPassword is not set above
             wifiPassword = getJsonValue(doc, "wifipassword");
             Serial.println("");
-            Serial.println("ssid password used from memory");
+            Serial.println("SSID password used from memory");
             Serial.println("SSID password: " + wifiPassword);
         } else {
             Serial.println("");
-            Serial.println("ssid password hardcoded");
+            Serial.println("SSID password hardcoded");
             Serial.println("SSID password: " + wifiPassword);
         }
         if (switchStr == "null") { // check switchStr is not set above
@@ -241,7 +241,7 @@ void readFiles() {
 
         Serial.println("LNbits ws prefix: " + urlPrefix);
         Serial.println("LNbits server: " + lnbitsServer);
-        Serial.println("LNbits api url: " + apiUrl);
+        Serial.println("LNbits API url: " + apiUrl);
         Serial.println("Switch device ID: " + deviceId);
     }
     paramFile.close();
