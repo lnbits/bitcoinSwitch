@@ -28,6 +28,7 @@ jobs:
           sketch-paths: |
             - bitcoinSwitch
           libraries: |
+            - name: Ethernet
             - name: WebSockets
             - name: ArduinoJson
           cli-compile-flags: |
