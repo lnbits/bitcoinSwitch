@@ -45,14 +45,14 @@ export const elements = [
     type: "text",
   },
   {
-    name: "wallet",
+    name: "thresholdInkey",
     value: "",
     label:
-      "THRESHOLD OPTION (use lnurlp extension to make an lnurlp) wallet ID from LNbits",
+      "THRESHOLD OPTION (use lnurlp extension to make an lnurlp) Invoice/read key from LNbits",
     type: "text",
   },
   {
-    name: "threshold",
+    name: "thresholdAmount",
     value: "",
     label: "THRESHOLD OPTION amount to hit to trigger",
     type: "text",
