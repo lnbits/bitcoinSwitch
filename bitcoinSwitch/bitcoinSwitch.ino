@@ -8,6 +8,12 @@ String version = "0.1.1";
 String ssid = "null"; // 'String ssid = "ssid";' / 'String ssid = "null";'
 String wifiPassword = "null"; // 'String wifiPassword = "password";' / 'String wifiPassword = "null";'
 
+// Newer Arduino Ethernet Shields include a sticker with the device's MAC address.
+// For older shields, choose your own MAC address.
+String ethernetMac = "null"; // 'String ethernetMac = "12:ab:34:cd:56:ef";' / 'String ethernetMac = "null";'
+// use empty or null to use IP address from DHCP
+String ethernetIp = "null"; // 'String ethernetIp = "10.0.0.7";' / 'String ethernetIp = "null";'
+
 // String from the lnurlDevice plugin in LNbits lnbits.com
 String switchStr = "null"; // 'String switchStr = "ws url";' / 'String switchStr = "null";'
 
@@ -21,6 +27,7 @@ long thresholdTime; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long
 //                                 END of variables                              //
 ///////////////////////////////////////////////////////////////////////////////////
 
+#include <Ethernet.h>
 #include <WiFi.h>
 #include <FS.h>
 #include <SPIFFS.h>
@@ -80,9 +87,31 @@ void setup() {
 
     readFiles(); // get the saved details and store in global variables
 
-    if (triggerConfig == true || ssid == "" || ssid == "null") {
+    if (triggerConfig == true ||
+        ((ssid == "" || ssid == "null") &&
+         (ethernetMac == "" || ethernetMac == "null"))) {
         Serial.println("Launch serial config");
         configOverSerialPort();
+    } else if (ethernetMac != "" && ethernetMac != "null") {
+        byte mac[] = {0, 0, 0, 0, 0, 0};
+        sscanf(ethernetMac.c_str(), "%2x:%2x:%2x:%2x:%2x:%2x",
+               &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5]);
+        if (ethernetIp != "" && ethernetIp != "null") {
+            IPAddress ip;
+            ip.fromString(ethernetIp);
+            Ethernet.begin(mac, ip);
+        } else {
+            if (Ethernet.begin(mac) == 0) {
+                Serial.println("Failed to get IP address from DHCP");
+                Serial.println("Stopping");
+                for (;;) {
+                    delay(1000);
+                }
+            }
+        }
+        Serial.println("Ethernet connected");
+        Serial.print("IP address: ");
+        Serial.println(Ethernet.localIP());
     } else {
         WiFi.begin(ssid.c_str(), wifiPassword.c_str());
         Serial.print("Connecting to WiFi");
