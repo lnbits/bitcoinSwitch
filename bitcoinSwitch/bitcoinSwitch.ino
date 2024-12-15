@@ -58,7 +58,6 @@ struct KeyValue {
 };
 
 void setup() {
-    WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN); // Force scanning for all APs, not just the first one
     Serial.begin(115200);
     Serial.println("Welcome to BitcoinSwitch, running on version: " + version);
     bool triggerConfig = false;
@@ -85,6 +84,7 @@ void setup() {
         Serial.println("Launch serial config");
         configOverSerialPort();
     } else {
+        WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN); // Force scanning for all APs, not just the first one
         WiFi.begin(ssid.c_str(), wifiPassword.c_str());
         Serial.print("Connecting to WiFi");
         while (WiFi.status() != WL_CONNECTED) {
