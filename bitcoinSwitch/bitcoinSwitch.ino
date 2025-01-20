@@ -81,7 +81,10 @@ void setup() {
     readFiles(); // get the saved details and store in global variables
 
     if (triggerConfig == true || ssid == "" || ssid == "null") {
-        Serial.println("Launch serial config");
+        Serial.println(">>>>>>>>>>>>>><<<<<<<<<<<<<<");
+        Serial.println(">>> Launch serial config <<<");
+        Serial.println(">>>  Waiting for upload  <<<");
+        Serial.println(">>>>>>>>>>>>>><<<<<<<<<<<<<<");
         configOverSerialPort();
     } else {
         WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN); // Force scanning for all APs, not just the first one
@@ -134,10 +137,10 @@ void loop() {
                 JsonObject payment = doc["payment"];
                 payment_amount = payment["amount"];
                 thresholdSum = thresholdSum + payment_amount;
-                Serial.println("thresholdSum: " + String(thresholdSum));
-                Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)));
-                Serial.println("thresholdPin: " + String(thresholdPin));
+                Serial.println("thresholdSum: " + String(thresholdSum) + " mSats");
+                Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)) + " mSats");
                 if (thresholdSum >= (thresholdAmount * 1000)) {
+                    Serial.println("Threshold value reached, switch pin " + String(thresholdPin) + " for " + String(thresholdTime) + " ms.");
                     pinMode(thresholdPin, OUTPUT);
                     digitalWrite(thresholdPin, HIGH);
                     delay(thresholdTime);
