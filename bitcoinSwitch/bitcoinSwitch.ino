@@ -81,9 +81,13 @@ void setup() {
     readFiles(); // get the saved details and store in global variables
 
     if (triggerConfig == true || ssid == "" || ssid == "null") {
-        Serial.println("Launch serial config");
+        Serial.println(">>>>>>>>>>>>>><<<<<<<<<<<<<<");
+        Serial.println(">>> Launch serial config <<<");
+        Serial.println(">>>  Waiting for upload  <<<");
+        Serial.println(">>>>>>>>>>>>>><<<<<<<<<<<<<<");
         configOverSerialPort();
     } else {
+        WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN); // Force scanning for all APs, not just the first one
         WiFi.begin(ssid.c_str(), wifiPassword.c_str());
         Serial.print("Connecting to WiFi");
         while (WiFi.status() != WL_CONNECTED) {
@@ -133,10 +137,10 @@ void loop() {
                 JsonObject payment = doc["payment"];
                 payment_amount = payment["amount"];
                 thresholdSum = thresholdSum + payment_amount;
-                Serial.println("thresholdSum: " + String(thresholdSum));
-                Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)));
-                Serial.println("thresholdPin: " + String(thresholdPin));
+                Serial.println("thresholdSum: " + String(thresholdSum) + " mSats");
+                Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)) + " mSats");
                 if (thresholdSum >= (thresholdAmount * 1000)) {
+                    Serial.println("Threshold value reached, switch pin " + String(thresholdPin) + " for " + String(thresholdTime) + " ms.");
                     pinMode(thresholdPin, OUTPUT);
                     digitalWrite(thresholdPin, HIGH);
                     delay(thresholdTime);
@@ -243,6 +247,64 @@ void readFiles() {
         Serial.println("LNbits server: " + lnbitsServer);
         Serial.println("LNbits API url: " + apiUrl);
         Serial.println("Switch device ID: " + deviceId);
+
+        // For threshold options
+        if (thresholdInkey == "")
+        { // check thresholdInkey is not set above
+            thresholdInkey = getJsonValue(doc, "thresholdInkey");
+            Serial.println("");
+            Serial.println("Threshold invoice key used from memory");
+            Serial.println("Threshold invoice key: " + thresholdInkey);
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold invoice key hardcoded");
+            Serial.println("Threshold invoice key: " + thresholdInkey);
+        }
+        if (thresholdAmount == 0)
+        { // check thresholdAmount is not set above
+            String thresholdAmountString = getJsonValue(doc, "thresholdAmount");
+            thresholdAmount = thresholdAmountString.toInt();
+            Serial.println("");
+            Serial.println("Threshold amount used from memory");
+            Serial.println("Threshold amount: " + String(thresholdAmount));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold amount hardcoded");
+            Serial.println("Threshold amount: " + String(thresholdAmount));
+        }
+        if (thresholdPin == 0)
+        { // check thresholdPin is not set above
+            String thresholdPinString = getJsonValue(doc, "thresholdPin");
+            thresholdPin = thresholdPinString.toInt();
+            Serial.println("");
+            Serial.println("Threshold pin to trigger used from memory");
+            Serial.println("Threshold pin to trigger: " + String(thresholdPin));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold pin to trigger hardcoded");
+            Serial.println("Threshold pin to trigger: " + String(thresholdPin));
+        }
+        if (thresholdTime == 0)
+        { // check thresholdPin is not set above
+            String thresholdTimeString = getJsonValue(doc, "thresholdTime");
+            thresholdTime = thresholdTimeString.toInt();
+            Serial.println("");
+            Serial.println("Threshold time used from memory");
+            Serial.println("Threshold time: " + String(thresholdTime));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold time hardcoded");
+            Serial.println("Threshold time: " + String(thresholdTime));
+        }
+        Serial.println("");
     }
     paramFile.close();
 }
