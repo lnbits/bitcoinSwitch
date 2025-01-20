@@ -244,6 +244,64 @@ void readFiles() {
         Serial.println("LNbits server: " + lnbitsServer);
         Serial.println("LNbits API url: " + apiUrl);
         Serial.println("Switch device ID: " + deviceId);
+
+        // For threshold options
+        if (thresholdInkey == "")
+        { // check thresholdInkey is not set above
+            thresholdInkey = getJsonValue(doc, "thresholdInkey");
+            Serial.println("");
+            Serial.println("Threshold invoice key used from memory");
+            Serial.println("Threshold invoice key: " + thresholdInkey);
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold invoice key hardcoded");
+            Serial.println("Threshold invoice key: " + thresholdInkey);
+        }
+        if (thresholdAmount == 0)
+        { // check thresholdAmount is not set above
+            String thresholdAmountString = getJsonValue(doc, "thresholdAmount");
+            thresholdAmount = thresholdAmountString.toInt();
+            Serial.println("");
+            Serial.println("Threshold amount used from memory");
+            Serial.println("Threshold amount: " + String(thresholdAmount));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold amount hardcoded");
+            Serial.println("Threshold amount: " + String(thresholdAmount));
+        }
+        if (thresholdPin == 0)
+        { // check thresholdPin is not set above
+            String thresholdPinString = getJsonValue(doc, "thresholdPin");
+            thresholdPin = thresholdPinString.toInt();
+            Serial.println("");
+            Serial.println("Threshold pin to trigger used from memory");
+            Serial.println("Threshold pin to trigger: " + String(thresholdPin));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold pin to trigger hardcoded");
+            Serial.println("Threshold pin to trigger: " + String(thresholdPin));
+        }
+        if (thresholdTime == 0)
+        { // check thresholdPin is not set above
+            String thresholdTimeString = getJsonValue(doc, "thresholdTime");
+            thresholdTime = thresholdTimeString.toInt();
+            Serial.println("");
+            Serial.println("Threshold time used from memory");
+            Serial.println("Threshold time: " + String(thresholdTime));
+        }
+        else
+        {
+            Serial.println("");
+            Serial.println("Threshold time hardcoded");
+            Serial.println("Threshold time: " + String(thresholdTime));
+        }
+        Serial.println("");
     }
     paramFile.close();
 }
